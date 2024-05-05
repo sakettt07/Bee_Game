@@ -20,12 +20,12 @@ const Loading = ({toggle}) => {
     <div className="bg-black relative h-screen w-full">
       {isPlaying ? (
         <FaCirclePause
-          className="absolute cursor-pointer right-3 bottom-6 md:right-7 md:bottom-8 text-white text-[30px]"
+          className="absolute z-10 cursor-pointer right-3 top-4 md:right-7 md:bottom-8 text-white text-[30px]"
           onClick={toggleAudio}
         />
       ) : (
         <FaCirclePlay
-          className="absolute cursor-pointer right-3 bottom-6 md:right-7 md:bottom-8 text-white text-[30px]"
+          className="absolute z-10 cursor-pointer right-3 top-4 md:right-7 md:bottom-8 text-white text-[30px]"
           onClick={toggleAudio}
         />
       )}
