@@ -1,37 +1,60 @@
-import React, { useRef } from 'react';
-import {useGSAP} from "@gsap/react";
-import gsap from 'gsap';
+import React, { useRef, useState, useEffect } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+import bat from "../assets/images/bat1.png";
+import Bees from "./Bees";
 
 const GameScreen = () => {
-  const bref=useRef();
-  useGSAP(()=>{
-    gsap.from(".box",{
-      y:200,
-      scale:1.3,
-      yoyo:true,
-      opacity:0,
-      duration:1.9,
-      x:200
-    }),
-    gsap.from(".box2",{
-      y:200,
-      scale:1.3,
-      yoyo:true,
-      opacity:0,
-      duration:1.9,
-      x:400
-    })
-  })
+  const [xvalue, setXvalue] = useState(0);
+  const [yvalue, setYvalue] = useState(0);
+  const [rota, setRota] = useState(60);
+  const [score, setScore] = useState(0);
+
+  const randomX = gsap.utils.random(-500, 500, 50);
+  const randomY = gsap.utils.random(-500, 300, 50);
+  const move = gsap.utils.random(-360, 60, 30);
+
+  const BeesAry=[
+    <Bees />,
+    <Bees />,
+    <Bees />,
+  ]
+
+
+  useGSAP(() => {
+    gsap.to(".makhi", {
+      x: xvalue,
+      y: yvalue,
+      duration: 0.6,
+      rotate: rota,
+    });
+  }, [xvalue, yvalue, rota]);
+
   return (
-    <>
-    <div className='h-screen w-full bg-zinc-950'>
-
-      <h2 ref={bref} className='textt text-white text-[8vw]'>This is my game screen</h2>
-      <div className='box h-32 w-32 bg-yellow-400'></div>
-      <div className='box2 h-32 w-32 bg-yellow-700'></div>
+    <div
+      className="relative overflow-hidden h-screen w-full bg-zinc-900"
+    >
+      <h1 className="text-red-500 text-center text-[6vw]">
+        Hit - <span className="text-white">{`${score}`}</span>{" "}
+      </h1>
+      <div>{BeesAry.map((item) => item)}</div>
+      <button onClick={(event) => {
+      setXvalue(randomX);
+      setYvalue(randomY);
+      setRota(move);
+      event.stopPropagation(); // Stop event bubbling
+    }} className="absolute bottom-[10%] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-700 p-3 hover:bg-blue-800">
+        Move Bee
+      </button>
+      <img
+        
+        className="bat w-42"
+        src={bat}
+        alt=""
+      />
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default GameScreen
+export default GameScreen;
